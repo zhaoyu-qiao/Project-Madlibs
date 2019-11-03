@@ -13,6 +13,26 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 
+// Get a story from the database. 
+
+let database = firebase.database();
+
+// Get the first story response from the data info, does there need to be a value change to trigger the function??????????????
+database.ref("movies").once("value", function (data) {
+    // do some stuff once
+    // console.log(database.ref().child("movies"));
+    console.log("db response:", data.val());
+    let responseObject = data.val();
+    let storyTemplate = Object.values(responseObject)[0].story;
+    console.log(storyTemplate);
+    return storyTemplate;
+});
+
+// this function doesn't trigger???????????????????, does there need to be a value change to trigger the function above?
+$("#testdb").on("click", function () {
+    $("#story").html(storyTemplate);
+})
+
 // Get 5 nouns /words from words api
 // curl 'https://wordsapiv1.p.mashape.com/words/?partOfSpeech=adverb&random=true' -H "X-Mashape-Key: c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
 let baseUrl = "https://wordsapiv1.p.mashape.com/words/";
@@ -48,7 +68,7 @@ let user_project = {
 console.log(user_project);
 
 // new object after selection
-// need to add attribute value with the actual value.
+// need to add attribute value with the actual value?????????????????
 function getNouns() {
 
     for (let i = 0; i < 5; i++) {
@@ -139,7 +159,6 @@ function getAdvs() {
 
 
 //submit function, save things into local storage.
-//!!!Need to add value attribute to the drop downs!!!
 $("#submit").click(function () {
     console.log('submit', this)
     let mine = $('#noun option:selected').val() // this is the selected item
@@ -155,6 +174,7 @@ $("#submit").click(function () {
 
 // randomly pull a story from firebase "on click" - new html with catogory buttons 
 // console.log
+// This is moved above.
 
 // combine the selected story and the pulled words which were stored in local storage, and the story into a string.
 // console.log
@@ -162,7 +182,7 @@ $("#submit").click(function () {
 // Need to also write the story string into HTML.
 // Need to make the code less repetitive using loops.
 
-// test function.
+// ????????????test function generate the whole story, .
 function madlibsGenerator() {
     $("#story").html('<p>' + "In my " + user_project.nounArray[0] + "," + user_project.nounArray[1] + user_project.verbArray[0] + "s a song of" + user_project.nounArray[2] + '</p>')
 }
