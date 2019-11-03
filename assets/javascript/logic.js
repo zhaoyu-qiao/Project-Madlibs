@@ -1,4 +1,18 @@
 // This is the js for page 4, when user input their choices, and make selection
+// Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyAZbkSjLOrmZFERAxfzs7AHI5-ht5xbT7k",
+    authDomain: "madlibs-f325f.firebaseapp.com",
+    databaseURL: "https://madlibs-f325f.firebaseio.com",
+    projectId: "madlibs-f325f",
+    storageBucket: "madlibs-f325f.appspot.com",
+    messagingSenderId: "702529571921",
+    appId: "1:702529571921:web:f073aeea048c108bf8fc70",
+    measurementId: "G-PDRGRKZPXH"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig)
+
 // Get 5 nouns /words from words api
 // curl 'https://wordsapiv1.p.mashape.com/words/?partOfSpeech=adverb&random=true' -H "X-Mashape-Key: c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
 let baseUrl = "https://wordsapiv1.p.mashape.com/words/";
@@ -18,13 +32,23 @@ console.log(verbUrl);
 console.log(adjectiveUrl);
 console.log(adverbUrl);
 
-let nounArray = [];
-let verbArray = [];
-let adjArray = [];
-let advArray = [];
+// let nounArray = [];
+// let verbArray = [];
+// let adjArray = [];
+// let advArray = [];
 
+let user_project = {
+    nounArray: [],
+    verbArray: [],
+    adjectiveArray: [],
+    adverbArray: [],
+    story: "",
+    user_name: "",
+}
+console.log(user_project);
 
-
+// new object after selection
+// need to add attribute value with the actual value.
 function getNouns() {
 
     for (let i = 0; i < 5; i++) {
@@ -40,7 +64,9 @@ function getNouns() {
             console.log(response.word);
 
             $("#noun").append('<option class="noun" id="noun1">' + response.word + '</option>');
-
+            user_project.nounArray.push(response.word);
+            console.log("nounArray:", user_project.nounArray);
+            return user_project.nounArray;
         })
     }
 }
@@ -60,6 +86,8 @@ function getVerbs() {
             console.log(response.word);
 
             $("#verb").append('<option class="verb">' + response.word + '</option>');
+            user_project.verbArray.push(response.word);
+            return user_project.verbArray;
 
         })
     }
@@ -80,7 +108,8 @@ function getAdjs() {
             console.log(response.word);
 
             $("#adjective").append('<option class="adjective">' + response.word + '</option>');
-
+            user_project.adjectiveArray.push(response.word);
+            return user_project.adjectiveArray;
         })
     }
 }
@@ -100,25 +129,62 @@ function getAdvs() {
             console.log(response.word);
 
             $("#adverb").append('<option class="adverb">' + response.word + '</option>');
-
+            user_project.adverbArray.push(response.word);
+            return user_project.adverbArray;
         })
     }
 }
+
+
+
+
+//submit function, save things into local storage.
+//!!!Need to add value attribute to the drop downs!!!
+$("#submit").click(function () {
+    console.log('submit', this)
+    let mine = $('#noun option:selected').val() // this is the selected item
+    //create an object to store the item
+    let selected = {
+        noun: "test",
+        selected: mine //??? what is mine here  
+    }
+    // var input = document.getElementById('noun');
+    console.log($('#noun option:selected').val());
+    localStorage.setItem('selected', JSON.stringify(selected));
+});
+
+// randomly pull a story from firebase "on click" - new html with catogory buttons 
+// console.log
+
+// combine the selected story and the pulled words which were stored in local storage, and the story into a string.
+// console.log
+
+// Need to also write the story string into HTML.
+// Need to make the code less repetitive using loops.
+
+// test function.
+function madlibsGenerator() {
+    $("#story").html('<p>' + "In my " + user_project.nounArray[0] + "," + user_project.nounArray[1] + user_project.verbArray[0] + "s a song of" + user_project.nounArray[2] + '</p>')
+}
+
+
 $(document).ready(function () {
     // Get the words
+    // Put the words into html form to the correct select drop-down.
     getNouns();
     getVerbs();
     getAdjs();
     getAdvs();
     //getLocations();
     //...
-    //writeNouns();
-    // Put the words into html form to the correct input.
 
-    // User select the words from the drop-downs
+    // User select the words from the drop-down - this is waiting for local storage. 
 
     // Submit
+    madlibsGenerator()
 })
+
+
 
 
 
