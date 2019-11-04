@@ -15,6 +15,9 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Firebase References -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -43,10 +46,10 @@
             </div>
         </div>
 
-        <!--Words Dropdown OPtion-->
+        <!--Words Dropdown Option-->
 
         <div class="container">
-            <form action="action_page.php">
+            <form action="mad-libs-story-result.html">
                 <label for="noun">Noun</label>
                 <select id="noun" name="noun">
                 </select>
@@ -60,7 +63,8 @@
                 <select id="adverb" name="adverb">
                 </select>
                 <!-- <input type="submit" value="Submit"> -->
-                <a href="mad-libs-story-result.html"><input type="submit" value="Submit"></a>
+                <input type="submit" value="Submit" id="words-submit">
+
             </form>
         </div>
 
