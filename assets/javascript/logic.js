@@ -18,7 +18,7 @@ firebase.initializeApp(firebaseConfig)
 let database = firebase.database();
 
 // Get the first story response from the data info, does there need to be a value change to trigger the function??????????????
-database.ref("movies").once("value", function (data) {
+database.ref("/movies").once("value", function (data) {
     // do some stuff once
     // console.log(database.ref().child("movies"));
     console.log("db response:", data.val());
