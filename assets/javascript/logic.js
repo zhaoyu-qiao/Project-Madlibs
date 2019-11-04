@@ -18,17 +18,27 @@ firebase.initializeApp(firebaseConfig)
 let database = firebase.database();
 
 // Get the first story response from the data info, does there need to be a value change to trigger the function??????????????
-database.ref("/movies").once("value", function (data) {
-    // do some stuff once
+
+// Two ways of getting the stories since on DB there are two ways of writing the stories
+// 1st use Object.values
+/*database.ref("/movies").once("value", function (data) {
     // console.log(database.ref().child("movies"));
     console.log("db response:", data.val());
     let responseObject = data.val();
     let storyTemplate = Object.values(responseObject)[0].story;
     console.log(storyTemplate);
     return storyTemplate;
-});
+});*/
+let storyTemplate = ""; // Define this 
+database.ref("/movies").once("value", function (childSnapshot) {
+    console.log("db response: ", childSnapshot.val());
+    storyTemplate = childSnapshot.val().Comedy;
+    console.log(storyTemplate);
+    //$("#story").html(storyTemplate); // this should not be triggered here
+    return storyTemplate;
+})
 
-// this function doesn't trigger???????????????????, does there need to be a value change to trigger the function above?
+// this function doesn't trigger, or that storyTemplate scope is wrong.
 $("#testdb").on("click", function () {
     $("#story").html(storyTemplate);
 })
@@ -57,7 +67,7 @@ console.log(adverbUrl);
 // let adjArray = [];
 // let advArray = [];
 
-let user_project = {
+/*let user_project = {
     nounArray: [],
     verbArray: [],
     adjectiveArray: [],
@@ -65,13 +75,35 @@ let user_project = {
     story: "",
     user_name: "",
 }
-console.log(user_project);
+console.log(user_project);*/
 
+
+//
+function getWords(queryUrl, wordType) {
+    for (let i = 0; i < 5; i++) {
+        $.ajax({
+            method: "POST",
+            beforeSend: function (request) {
+                request.setRequestHeader("X-Mashape-Key", "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea");
+            },
+            method: "GET",
+            url: queryUrl,
+        }).then(function (response) {
+            console.log(response.word);
+
+            $("#" + wordType).append('<option class="' + wordType + '">' + response.word + '</option>');
+            //user_project.nounArray.push(response.word);
+            //console.log("nounArray:", user_project.nounArray);
+            //return user_project.nounArray;
+        })
+    }
+
+}
 // new object after selection
 // need to add attribute value with the actual value?????????????????
 function getNouns() {
-
-    for (let i = 0; i < 5; i++) {
+    getWords(nounUrl, "noun");
+    /*for (let i = 0; i < 5; i++) {
         $.ajax({
             method: "POST",
             beforeSend: function (request) {
@@ -80,7 +112,6 @@ function getNouns() {
             method: "GET",
             url: nounUrl,
         }).then(function (response) {
-            console.log(response);
             console.log(response.word);
 
             $("#noun").append('<option class="noun" id="noun1">' + response.word + '</option>');
@@ -88,89 +119,25 @@ function getNouns() {
             console.log("nounArray:", user_project.nounArray);
             return user_project.nounArray;
         })
-    }
+    }*/
 }
 
 function getVerbs() {
-
-    for (let i = 0; i < 5; i++) {
-        $.ajax({
-            method: "POST",
-            beforeSend: function (request) {
-                request.setRequestHeader("X-Mashape-Key", "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea");
-            },
-            method: "GET",
-            url: verbUrl,
-        }).then(function (response) {
-            console.log(response);
-            console.log(response.word);
-
-            $("#verb").append('<option class="verb">' + response.word + '</option>');
-            user_project.verbArray.push(response.word);
-            return user_project.verbArray;
-
-        })
-    }
+    getWords(verbUrl, "verb");
 }
 
 function getAdjs() {
-
-    for (let i = 0; i < 5; i++) {
-        $.ajax({
-            method: "POST",
-            beforeSend: function (request) {
-                request.setRequestHeader("X-Mashape-Key", "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea");
-            },
-            method: "GET",
-            url: adjectiveUrl,
-        }).then(function (response) {
-            console.log(response);
-            console.log(response.word);
-
-            $("#adjective").append('<option class="adjective">' + response.word + '</option>');
-            user_project.adjectiveArray.push(response.word);
-            return user_project.adjectiveArray;
-        })
-    }
+    getWords(adjectiveUrl, "adjective");
 }
 
 function getAdvs() {
-
-    for (let i = 0; i < 5; i++) {
-        $.ajax({
-            method: "POST",
-            beforeSend: function (request) {
-                request.setRequestHeader("X-Mashape-Key", "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea");
-            },
-            method: "GET",
-            url: adverbUrl,
-        }).then(function (response) {
-            console.log(response);
-            console.log(response.word);
-
-            $("#adverb").append('<option class="adverb">' + response.word + '</option>');
-            user_project.adverbArray.push(response.word);
-            return user_project.adverbArray;
-        })
-    }
+    getWords(adverbUrl, "adverb");
 }
 
 
 
 
-//submit function, save things into local storage.
-$("#submit").click(function () {
-    console.log('submit', this)
-    let mine = $('#noun option:selected').val() // this is the selected item
-    //create an object to store the item
-    let selected = {
-        noun: "test",
-        selected: mine //??? what is mine here  
-    }
-    // var input = document.getElementById('noun');
-    console.log($('#noun option:selected').val());
-    localStorage.setItem('selected', JSON.stringify(selected));
-});
+
 
 // randomly pull a story from firebase "on click" - new html with catogory buttons 
 // console.log
@@ -182,10 +149,10 @@ $("#submit").click(function () {
 // Need to also write the story string into HTML.
 // Need to make the code less repetitive using loops.
 
-// ????????????test function generate the whole story, .
-function madlibsGenerator() {
-    $("#story").html('<p>' + "In my " + user_project.nounArray[0] + "," + user_project.nounArray[1] + user_project.verbArray[0] + "s a song of" + user_project.nounArray[2] + '</p>')
-}
+
+
+
+
 
 
 $(document).ready(function () {
@@ -198,10 +165,38 @@ $(document).ready(function () {
     //getLocations();
     //...
 
-    // User select the words from the drop-down - this is waiting for local storage. 
+    //submit function, save things into local storage.
+    $("#submit").click(function (event) {
+        //prevent refresh
+        event.preventDefault();
+        console.log('submit', this)
+        let nounSelected = $('#noun option:selected').val() // this is the selected item
+        let verbSelected = $('#verb option:selected').val()
+        let adjectiveSelected = $('#adjective option:selected').val()
+        let adverbSelected = $('#adverb option:selected').val()
 
-    // Submit
-    madlibsGenerator()
+        //create an object to store the item
+        let selected = {
+            noun: nounSelected,
+            verb: verbSelected,
+            adjective: adjectiveSelected,
+            adverb: adverbSelected,
+            //selected: "" //??? what is mine here  
+        }
+        // var input = document.getElementById('noun');
+        console.log($('#noun option:selected').val());
+        console.log("user choices: ", selected);
+        localStorage.setItem('selected', JSON.stringify(selected));
+    });
+
+    //Replace words within $$..$$ with the selected words stored in local storage.
+    $("#replace").on("click", function (event) {
+        event.preventDefault();
+        let selectedWords = JSON.parse(localStorage.getItem("selected"));
+        console.log(selectedWords);
+        let wholeStory = storyTemplate.replace("$$fullName$$", selectedWords.noun);
+        $("#story").text(wholeStory);
+    })
 })
 
 
