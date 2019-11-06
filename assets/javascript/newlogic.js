@@ -17,13 +17,35 @@ firebase.initializeApp(firebaseConfig)
 // link the database
 let database = firebase.database();
 
-// Get topics from movies category
-let topics = "";
-database.ref("/movies").once("value", function (childSnapshot) {
-    topics = Object.keys(childSnapshot.val());
-    console.log(topics);
-    return topics;
+// Choose category 
+$(".category").on("click", function () {
+    let category = $(this).val()
+    console.log(category);
+    return category
 })
+
+// Get movies story from movies category
+if (category = "movies") {
+    let storyTemplate = "";
+
+    database.ref().once("value", function (Snapshot) {
+        console.log(Snapshot.val());
+        let movieStories = Snapshot.val().movies;
+        console.log(movieStories);
+        let movieTopics = Object.keys(movieStories);
+
+        //topics = Object.keys(Snapshot.val().category);
+        console.log(Snapshot.val());
+        console.log(movieTopics);
+
+        // Get a movie story
+        storyTemplate = movieStories.topicSelected;
+
+        console.log(storyTemplate);
+        //$("#story").html(storyTemplate); // this should not be triggered here
+        return storyTemplate;
+    })
+}
 
 
 // When click testdb button to get a story, also generate the topics drop down
@@ -33,9 +55,9 @@ $("#testdb").on("click", function () {
     //     $("#topic").append('<option class="topics">' + topics[i] + '</option>');
     // }
     // Write topics
-    //topics.forEach(function (elm) {
-    //   $("#topic").append('<option class="topics">' + elm + '</option>');
-    //})
+    movieTopics.forEach(function (elm) {
+        $("#topic").append('<option class="topics">' + elm + '</option>');
+    })
 })
 
 //submit2 topics, save selected topic into local storage.
@@ -45,25 +67,21 @@ $("#submit2").click(function (event) {
     let topicSelected = $('#topic option:selected').val()
     console.log(topicSelected);
     localStorage.setItem('topic', topicSelected); // Save to local storage as string
+    return topicSelected;
 })
 
-// Choose category 
-$(".category").on("click", function () {
-    let category = $(this).val()
-    console.log(category)
-    return category
-})
-// Get a story
-let storyTemplate = "";
+
+// Get a movie story
+/*let storyTemplate = "";
 database.ref("/movies").once("value", function (childSnapshot) {
-    console.log("db response: ", childSnapshot.val());
+    console.log("db response: ", childSnapshot.val())
     // tv  + 5
-    storyTemplate = childSnapshot.val().action;
+    storyTemplate = childSnapshot.val().topicSelected;
 
     console.log(storyTemplate);
     //$("#story").html(storyTemplate); // this should not be triggered here
     return storyTemplate;
-})
+})*/
 
 
 // Get 5 nouns /words from words api

@@ -26,6 +26,7 @@
     <!-- Firebase References, you need both app and database libraries -->
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script defer src="./assets/javascript/getwords.js"></script>
     <script defer src="./assets/javascript/logic.js"></script>
 
     <title>Madlibs</title>
@@ -68,9 +69,17 @@
             <label for="topic">Topic</label>
             <select id="topic" name="topic">
             </select>
-            <input id="submit2" type="submit" value="Submit2">
+            <input id="submit2" type="submit" value="Submit Topic">
 
         </form>
+
+        <!--Category Buttons-->
+        <button class="category" value="movies" type="button">Movie</button>
+        <button class="category" value="pop-culture" type="button">Pop-Culture</button>
+        <button class="category" value="songs" type="button">Songs</button>
+        <button class="category" value="tv" type="button">TV</button>
+
+
 
         <div id="test">
             <button id="testdb">Get the story template</button>
