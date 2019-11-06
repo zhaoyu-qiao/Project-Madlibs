@@ -18,7 +18,21 @@
       margin-bottom: 400px;
   } */
  
+   body { 
+    background-image: url("../images/mad-libs-gif.gif"), url("../images/mad-libs-gif.gif");
+
+    background-position: top left, top right;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 250px, 250px; 
+  } 
   
+  /* body { 
+    background-image: url("../images/mad-libs-gif.gif");
+
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 250px; 
+  } */
   
  div.card-img-overlay {
     margin: 30px;
@@ -41,8 +55,11 @@ div.card-img-overlay h1, div.card-img-overlay h2 {
 
 /* The Play Again button */
 #play-again-btn {
+    margin-top: 30px;
     margin-left: 500px;
     font-size: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 

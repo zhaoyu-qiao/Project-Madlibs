@@ -1,12 +1,31 @@
 
-body { 
+/* body { 
     background-image: url("../images/blue-3d-modern-background-design.jpg");
     background-repeat: no-repeat;
     background-size: cover;
    
-  }
+  } */
 
+.theme-container a {
 
+}
+
+.theme-image {
+  height: 350px;
+  width: 500px;
+  float: left;
+  margin-top: 40px;
+  margin-left: 200px;
+  margin-right: 5px;
+  margin-bottom: 40px;
+  border-radius: 5%;
+  box-shadow: 20px 20px 15px grey;
+
+}
+
+.theme-image:hover {
+  filter: brightness(150%); 
+}
 
 img {
     box-shadow: 10px 10px 5px grey;
@@ -14,6 +33,10 @@ img {
 
 img:hover {
     opacity: 0.6;
+}
+
+#theme-header{
+  width: 100%;
 }
 
 
@@ -31,22 +54,28 @@ div.card-img-overlay h1, div.card-img-overlay h3 {
     margin-top: 20px;
 }
 
+h1, h3 {
+    margin-top: 10px;
+}
+
 
 .theme-container {
     float: left;
-    margin-top: 45px;
-    margin-left: 350px;
+    margin-top: -5px;
+    /* margin-left: 150px; */
     margin-bottom: 20px;
+    background-image: url("../images/blue-3d-modern-background-design.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.theme-image{
-    float: left;
-    margin-left: 40px;
-    margin-bottom: 40px;
-    border-radius: 5%;
-}
+
 
 /* 
 #pop-culture-image{
     margin-left: 220px;
 } */
+
+
+
+

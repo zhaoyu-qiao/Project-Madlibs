@@ -1,4 +1,4 @@
-  body { 
+  .select-your-words { 
     background-image: url("../images/group-of-characters.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -6,16 +6,6 @@
    
   }  
  
- /*  body { 
-    background-image: url("../images/story-pic-with-volcano.png"), url("../images/need-a-noun-pic.png");
-    background-position: left, right;
-    background-repeat: no-repeat, no-repeat;   */ 
-    
-
-    /* background-size: cover, cover;   */
-    /* margin-top: 300px;  */
-   /* }  */
-
 
  div.card-img-overlay {
     margin: 30px;
@@ -69,9 +59,6 @@ form {
   margin-top: 40px;
   margin-right: 300px;
   margin-left: 250px;
-
-
-
 }
 
 label {
