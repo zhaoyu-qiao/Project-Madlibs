@@ -29,20 +29,48 @@ let database = firebase.database();
     console.log(storyTemplate);
     return storyTemplate;
 });*/
+
+let topics = "";
+database.ref("/movies").once("value", function (childSnapshot) {
+    topics = Object.keys(childSnapshot.val());
+    console.log(topics);
+    return topics;
+})
+
+
+
+// this function doesn't trigger, or that storyTemplate scope is wrong.
+$("#testdb").on("click", function () {
+    $("#story").html(storyTemplate);
+    // for (let i = 0; i < topics.length; i++) {
+    //     $("#topic").append('<option class="topics">' + topics[i] + '</option>');
+    // }
+    // Get topics
+    topics.forEach(function (elm) {
+        $("#topic").append('<option class="topics">' + elm + '</option>');
+    })
+
+})
+//submit2 topics, save topics into local storage.
+$("#submit2").click(function (event) {
+    //prevent refresh
+    event.preventDefault();
+    let topicSelected = $('#topic option:selected').val()
+    console.log(topicSelected);
+    localStorage.setItem('topic', topicSelected); // Save to local storage as string
+})
+
 let storyTemplate = ""; // Define this 
 database.ref("/movies").once("value", function (childSnapshot) {
     console.log("db response: ", childSnapshot.val());
     // tv  + 5
-    storyTemplate = childSnapshot.val().movie1;
+    storyTemplate = childSnapshot.val().action;
+
     console.log(storyTemplate);
     //$("#story").html(storyTemplate); // this should not be triggered here
     return storyTemplate;
 })
 
-// this function doesn't trigger, or that storyTemplate scope is wrong.
-$("#testdb").on("click", function () {
-    $("#story").html(storyTemplate);
-})
 
 // Get 5 nouns /words from words api
 // curl 'https://wordsapiv1.p.mashape.com/words/?partOfSpeech=adverb&random=true' -H "X-Mashape-Key: c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
@@ -74,6 +102,7 @@ console.log(pronounUrl);
 console.log(user_project);*/
 
 
+
 //Getwords function
 function getWords(queryUrl, wordType) {
     for (let i = 0; i < 5; i++) {
@@ -99,23 +128,6 @@ function getWords(queryUrl, wordType) {
 // need to add attribute value with the actual value?????????????????
 function getNouns() {
     getWords(nounUrl, "noun");
-    /*for (let i = 0; i < 5; i++) {
-        $.ajax({
-            method: "POST",
-            beforeSend: function (request) {
-                request.setRequestHeader("X-Mashape-Key", "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea");
-            },
-            method: "GET",
-            url: nounUrl,
-        }).then(function (response) {
-            console.log(response.word);
-
-            $("#noun").append('<option class="noun" id="noun1">' + response.word + '</option>');
-            user_project.nounArray.push(response.word);
-            console.log("nounArray:", user_project.nounArray);
-            return user_project.nounArray;
-        })
-    }*/
 }
 
 function getVerbs() {
@@ -196,16 +208,16 @@ $(document).ready(function () {
     //cited from this youtube video: https://www.youtube.com/watch?v=ziBO-U2_t3k
 
     // replacer is a call back function to return the POS from local storage
-    function replacer(match, p1, p2, p3, p4, p5, offset, string) {
-        // console.log('match and pos', match, p1, p2, p3, p4, p5, offset, string)
-        return "TEST";
-        //this replace everything with $$..$$ with "test"
+    //function replacer(match, p1, p2, p3, p4, p5, offset, string) {
+    // console.log('match and pos', match, p1, p2, p3, p4, p5, offset, string)
+    //return "TEST";
+    //this replace everything with $$..$$ with "test"
 
-        //console.log(entry);
+    //console.log(entry);
 
-        //return entry[pos]
+    //return entry[pos]
 
-    }
+    //}
 
     $("#replace").on("click", function (event) {
         event.preventDefault();
@@ -215,7 +227,7 @@ $(document).ready(function () {
         let wholeStory = storyTemplate;
 
         for (let prop in selectedWords) {
-            let toFind = new RegExp('\\$\\$' + prop + '\\$\\$', 'g');
+            let toFind = new RegExp('\\$\\$' + prop + '\\$\\$', 'g'); // Need to double escape
 
             console.log('for you to see:', prop, selectedWords[prop], toFind)
             wholeStory = wholeStory.replace(toFind, selectedWords[prop]); // separate this part to different word types?
@@ -232,11 +244,3 @@ $(document).ready(function () {
         //      obj[property].forEach
     })
 })
-
-
-
-
-
-// $(window).on("load", function () {
-
-// });
