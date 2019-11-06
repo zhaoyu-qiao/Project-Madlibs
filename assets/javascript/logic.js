@@ -32,7 +32,8 @@ let database = firebase.database();
 let storyTemplate = ""; // Define this 
 database.ref("/movies").once("value", function (childSnapshot) {
     console.log("db response: ", childSnapshot.val());
-    storyTemplate = childSnapshot.val().Comedy;
+    // tv  + 5
+    storyTemplate = childSnapshot.val().movie1;
     console.log(storyTemplate);
     //$("#story").html(storyTemplate); // this should not be triggered here
     return storyTemplate;
@@ -50,22 +51,17 @@ let nounString = "?partOfSpeech=noun";
 let verbString = "?partOfSpeech=verb";
 let adjectiveString = "?partOfSpeech=adjective";
 let adverbString = "?partOfSpeech=adverb";
+let pronounString = "?partOfSpeech=pronoun"
 
 
 let nounUrl = baseUrl + nounString + "&random=true";
 let verbUrl = baseUrl + verbString + "&random=true";
 let adjectiveUrl = baseUrl + adjectiveString + "&random=true";
 let adverbUrl = baseUrl + adverbString + "&random=true";
-
+let pronounUrl = baseUrl + pronounString + "&random=true";
 console.log(nounUrl);
-console.log(verbUrl);
-console.log(adjectiveUrl);
-console.log(adverbUrl);
+console.log(pronounUrl);
 
-// let nounArray = [];
-// let verbArray = [];
-// let adjArray = [];
-// let advArray = [];
 
 /*let user_project = {
     nounArray: [],
@@ -78,7 +74,7 @@ console.log(adverbUrl);
 console.log(user_project);*/
 
 
-//
+//Getwords function
 function getWords(queryUrl, wordType) {
     for (let i = 0; i < 5; i++) {
         $.ajax({
@@ -89,7 +85,7 @@ function getWords(queryUrl, wordType) {
             method: "GET",
             url: queryUrl,
         }).then(function (response) {
-            console.log(response.word);
+            // console.log(response.word);
 
             $("#" + wordType).append('<option class="' + wordType + '">' + response.word + '</option>');
             //user_project.nounArray.push(response.word);
@@ -134,6 +130,9 @@ function getAdvs() {
     getWords(adverbUrl, "adverb");
 }
 
+function getPronouns() {
+    getWords(pronounUrl, "pronoun");
+}
 
 
 
@@ -162,6 +161,7 @@ $(document).ready(function () {
     getVerbs();
     getAdjs();
     getAdvs();
+    getPronouns();
     //getLocations();
     //...
 
@@ -169,33 +169,67 @@ $(document).ready(function () {
     $("#submit").click(function (event) {
         //prevent refresh
         event.preventDefault();
-        console.log('submit', this)
+        // console.log('submit', this)
         let nounSelected = $('#noun option:selected').val() // this is the selected item
         let verbSelected = $('#verb option:selected').val()
         let adjectiveSelected = $('#adjective option:selected').val()
         let adverbSelected = $('#adverb option:selected').val()
+        let pronounSelected = $('#pronoun option:selected').val()
 
-        //create an object to store the item
+        //create an object to store the selected words
         let selected = {
             noun: nounSelected,
             verb: verbSelected,
             adjective: adjectiveSelected,
             adverb: adverbSelected,
+            pronoun: pronounSelected
             //selected: "" //??? what is mine here  
         }
         // var input = document.getElementById('noun');
         console.log($('#noun option:selected').val());
         console.log("user choices: ", selected);
-        localStorage.setItem('selected', JSON.stringify(selected));
+        localStorage.setItem('selected', JSON.stringify(selected)); // Save to local storage as string
+        return selected;
     });
 
     //Replace words within $$..$$ with the selected words stored in local storage.
+    //cited from this youtube video: https://www.youtube.com/watch?v=ziBO-U2_t3k
+
+    // replacer is a call back function to return the POS from local storage
+    function replacer(match, p1, p2, p3, p4, p5, offset, string) {
+        // console.log('match and pos', match, p1, p2, p3, p4, p5, offset, string)
+        return "TEST";
+        //this replace everything with $$..$$ with "test"
+
+        //console.log(entry);
+
+        //return entry[pos]
+
+    }
+
     $("#replace").on("click", function (event) {
         event.preventDefault();
         let selectedWords = JSON.parse(localStorage.getItem("selected"));
         console.log(selectedWords);
-        let wholeStory = storyTemplate.replace("$$fullName$$", selectedWords.noun);
+
+        let wholeStory = storyTemplate;
+
+        for (let prop in selectedWords) {
+            let toFind = new RegExp('\\$\\$' + prop + '\\$\\$', 'g');
+
+            console.log('for you to see:', prop, selectedWords[prop], toFind)
+            wholeStory = wholeStory.replace(toFind, selectedWords[prop]); // separate this part to different word types?
+            // console.log(wholeStory)
+
+        }
         $("#story").text(wholeStory);
+
+        // let wholeStory = storyTemplate.replace(/\$\$(.*?)\$\$/g, replacer); // separate this part to different word types?
+        //$("#story").text(wholeStory);
+        //return selectedWords;
+
+        // for every property in object
+        //      obj[property].forEach
     })
 })
 
