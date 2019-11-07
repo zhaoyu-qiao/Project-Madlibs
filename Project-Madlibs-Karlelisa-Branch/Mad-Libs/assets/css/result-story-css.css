@@ -1,0 +1,84 @@
+/* body { 
+    background-image: url("../images/curtain\ background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 10;
+   
+  }  */
+
+ /*  body {
+    height: 100vh;  
+    margin: 0;
+    display: grid;
+    
+  }  */
+
+/*   
+  div.container {
+      margin-bottom: 400px;
+  } */
+ 
+   body { 
+    background-image: url("../images/mad-libs-gif.gif"), url("../images/mad-libs-gif.gif");
+
+    background-position: top left, top right;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 250px, 250px; 
+  } 
+  
+  /* body { 
+    background-image: url("../images/mad-libs-gif.gif");
+
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 250px; 
+  } */
+  
+ div.card-img-overlay {
+    margin: 30px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.7; 
+}
+
+
+div.card-img-overlay h1, div.card-img-overlay h2 {
+    font-weight: bolder;
+    color: #000000;
+    margin-top: 20px;
+} 
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* The Play Again button */
+#play-again-btn {
+    margin-top: 30px;
+    margin-left: 500px;
+    font-size: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+/* Social Media Buttons */
+.social-buttons {
+    margin-top:-100px;
+    margin-left: -680px;
+    padding-left: 30px; 
+    
+}
+
+
+/* Social Media Buttons */
+/* Cited: https://www.w3schools.com/howto/howto_css_social_media_buttons.asp */
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 30px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+  }
