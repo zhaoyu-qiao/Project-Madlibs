@@ -52,7 +52,16 @@ $(document).ready(function() {
     console.log(e.message);
   });
 
-  function validateForm() {
+  /*  function validateForm() {
     window.location.replace("mad-libs-theme-selector-page.html");
-  }
+  } */
+
+  // The toggle between the sign up form and the sign in form
+
+  $(".sign-in").click(function(e) {
+    console.log("Hi Karlelisa");
+    $("#myModal").modal();
+    $(".sign-up-content").hide();
+    $(".sign-in-content").show();
+  });
 });

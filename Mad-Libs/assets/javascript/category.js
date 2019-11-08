@@ -7,10 +7,10 @@ $(document).ready(() => {
   for (let i = 0; i < 1; i++) {
     // $('.theme-container').append(`<img src='assets/images/movies-mad-libs.jpg' class='theme-image'category=${stories[i]}>`)
     $(".theme-container").append(
-      `<a href="./mad-libs-word-selector.html"><img src='assets/images/movies-mad-libs.jpg' class='theme-image' category=${stories[i]}></a>` +
-        `<a href="./mad-libs-word-selector.html"><img src='assets/images/music-libs.jpg' class='theme-image' category=${stories[i]}></a>` +
-        `<a href="./mad-libs-word-selector.html"><img src='assets/images/pop-culture-wihte-background.jpg' class='theme-image'category=${stories[i]}></a>` +
-        `<a href="./mad-libs-word-selector.html"><img src='assets/images/tv-show-mad-libs.png' class='theme-image' category=${stories[i]}></a>`
+      `<a href="./mad-libs-word-selector.html"><img src='assets/images/movies-mad-libs.jpg' class='theme-image' id='movie-image' category=${stories[i]}></a>` +
+        `<a href="./mad-libs-word-selector.html"><img src='assets/images/music-libs.jpg' class='theme-image' id='music-image' category=${stories[i]}></a>` +
+        `<a href="./mad-libs-word-selector.html"><img src='assets/images/pop-culture-wihte-background.jpg' class='theme-image' id='pop-culture-image' category=${stories[i]}></a>` +
+        `<a href="./mad-libs-word-selector.html"><img src='assets/images/tv-show-mad-libs.png' class='theme-image' id='tv-image'category=${stories[i]}></a>`
     );
   }
 
