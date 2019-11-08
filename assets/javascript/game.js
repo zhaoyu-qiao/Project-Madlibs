@@ -1,4 +1,4 @@
-// This is the js for page 4, when user input their choices, and make selection
+// This is the js for word selector, when user input their choices, and make selection
 // Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyAZbkSjLOrmZFERAxfzs7AHI5-ht5xbT7k",
@@ -17,72 +17,22 @@ firebase.initializeApp(firebaseConfig)
 
 let database = firebase.database();
 let categ = ""
-// Get the first story response from the data info, does there need to be a value change to trigger the function??????????????
-
-// Two ways of getting the stories since on DB there are two ways of writing the stories
-// 1st use Object.values
-/*database.ref("/movies").once("value", function (data) {
-    // console.log(database.ref().child("movies"));
-    console.log("db response:", data.val());
-    let responseObject = data.val();
-    let storyTemplate = Object.values(responseObject)[0].story;
-    console.log(storyTemplate);
-    return storyTemplate;
-});*/
+//categ is the catagories, movies, pop-culture,tv and songs. 
 
 let topics = "";
-// database.ref("/movies").once("value", function (childSnapshot) {//TODO associate topic to link clicked
-//     topics = Object.keys(childSnapshot.val());
-//     console.log("topics",topics);
-//     console.log("db response: ", childSnapshot.val());
-//     topics.forEach(function (elm) {
-//         $("#topic").append('<option class="topics">' + elm + '</option>');
-//         // tv  + 5
-//     }) 
-//     storyTemplate = childSnapshot.val()
-//     console.log("story template",storyTemplate);
-//     return topics;//TODO evaluate if return needed?
-// })
+//topics are the child properties for the catagories, the topics are the stories. 
 
-
-
-// this function doesn't trigger, or that storyTemplate scope is wrong.
+//testdb is the function that gets the story with the macros $$ in place where the user can see the works that will be replaces byt the word selector. Good visual tat works the correct workds are being replaced. 
 $("#testdb").on("click", function () {
     event.preventDefault();
     let topicSelected = $('#topic option:selected').val()
     console.log(topicSelected);
     localStorage.setItem('topic', topicSelected);
     $("#story").html(storyTemplate[localStorage.getItem('topic')]);
-    // for (let i = 0; i < topics.length; i++) {
-    //     $("#topic").append('<option class="topics">' + topics[i] + '</option>');
-    // }
-    // // Get topics
-    // topics.forEach(function (elm) {
-    //     $("#topic").append('<option class="topics">' + elm + '</option>');
-    //})
 
 })
-// //submit2 topics, save topics into local storage.
-// $("#submit2").click(function (event) {
-//     //prevent refresh
-//     event.preventDefault();
-//     let topicSelected = $('#topic option:selected').val()
-//     console.log(topicSelected);
-//     localStorage.setItem('topic', topicSelected);
-//      // Save to local storage as string
-// })
 
-let storyTemplate = ""; // Define this 
-// database.ref("/movies").once("value", function (childSnapshot) {
-//     console.log("db response: ", childSnapshot.val());
-//     // tv  + 5
-//     storyTemplate = childSnapshot.val().action;
-
-//     console.log(storyTemplate);
-//     //$("#story").html(storyTemplate); // this should not be triggered here
-//     return storyTemplate;
-// })
-
+let storyTemplate = "";
 
 // Get 5 nouns /words from words api
 // curl 'https://wordsapiv1.p.mashape.com/words/?partOfSpeech=adverb&random=true' -H "X-Mashape-Key: c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
@@ -93,7 +43,7 @@ let adjectiveString = "?partOfSpeech=adjective";
 let adverbString = "?partOfSpeech=adverb";
 let pronounString = "?partOfSpeech=pronoun"
 
-
+//Firebase query
 let nounUrl = baseUrl + nounString + "&random=true";
 let verbUrl = baseUrl + verbString + "&random=true";
 let adjectiveUrl = baseUrl + adjectiveString + "&random=true";
@@ -103,19 +53,7 @@ console.log(nounUrl);
 console.log(pronounUrl);
 
 
-/*let user_project = {
-    nounArray: [],
-    verbArray: [],
-    adjectiveArray: [],
-    adverbArray: [],
-    story: "",
-    user_name: "",
-}
-console.log(user_project);*/
-
-
-
-//Getwords function
+//Getwords function, retrieve 5 words for each word type
 function getWords(queryUrl, wordType) {
     for (let i = 0; i < 5; i++) {
         $.ajax({
@@ -126,18 +64,14 @@ function getWords(queryUrl, wordType) {
             method: "GET",
             url: queryUrl,
         }).then(function (response) {
-            // console.log(response.word);
-
+            //word to appear in dropdown
             $("#" + wordType).append('<option class="' + wordType + '">' + response.word + '</option>');
-            //user_project.nounArray.push(response.word);
-            //console.log("nounArray:", user_project.nounArray);
-            //return user_project.nounArray;
+
         })
     }
 
 }
 // new object after selection
-// need to add attribute value with the actual value?????????????????
 function getNouns() {
     getWords(nounUrl, "noun");
 }
@@ -158,25 +92,7 @@ function getPronouns() {
     getWords(pronounUrl, "pronoun");
 }
 
-
-
-
-
-// randomly pull a story from firebase "on click" - new html with catogory buttons 
-// console.log
-// This is moved above.
-
-// combine the selected story and the pulled words which were stored in local storage, and the story into a string.
-// console.log
-
-// Need to also write the story string into HTML.
-// Need to make the code less repetitive using loops.
-
-
 $()
-
-
-
 
 $(document).ready(function () {
     // Get the words
@@ -186,33 +102,25 @@ $(document).ready(function () {
     getAdjs();
     getAdvs();
     getPronouns();
-    //getLocations();
-    //...
-    // categ = window.location.href.slice(window.location.href.indexOf('?') + 1).split("=")[1]
-    // console.log("categ", categ)
 
+    //selected catagory and cooresponding topics keys from DB
     database.ref('/').on('value', function (childSnapshot) {
-
         let categKeys = Object.keys(childSnapshot.val());
 
         categKeys.forEach(function (elm) {
-            // database.ref(`/${elm}`)...
             let myBtn = $('<button>').text(elm).attr('data-category', elm);
             myBtn.addClass('categ-c')
             $('.theme-container').append(myBtn);
         })
-        console.log('key', childSnapshot.key)
         console.log('child', (childSnapshot.val()))
     })
 
-    // $('.categ-c').click(function(evt) {
-    // $(".theme-container").on("click", ".categ-c", function () {
+    //images on theme selector page
     $(".theme-container").on("click", ".theme-image", function () {
         let categ = $(this).attr('data-category');
         console.log(categ);
 
-        // database.ref(`/`).once("value", function (childSnapshot) { //TODO associate topic to link clicked
-        database.ref(`/${categ}`).once("value", function (childSnapshot) { //TODO associate topic to link clicked
+        database.ref(`/${categ}`).once("value", function (childSnapshot) {
             topics = Object.keys(childSnapshot.val());
             console.log("topics", topics);
             // console.log
@@ -220,28 +128,23 @@ $(document).ready(function () {
 
             topics.forEach(function (elm) {
                 $("#topic").append('<option class="topics">' + elm + '</option>');
-                // tv  + 5
+
             })
             storyTemplate = childSnapshot.val()
             console.log("story template", storyTemplate);
-            return topics; //TODO evaluate if return needed?
+            return topics;
         })
     })
 
-
-
-    // database.ref(`/`).once("value", function (childSnapshot) { //TODO associate topic to link clicked
-    database.ref(`/${categ}`).once("value", function (childSnapshot) { //TODO associate topic to link clicked
+    //info from DB for local storage
+    database.ref(`/${categ}`).once("value", function (childSnapshot) {
         topics = Object.keys(childSnapshot.val());
         console.log("topics", topics);
         console.log("db response: ", childSnapshot.val());
         // set movie response to localStorage
         localStorage.setItem('topics', topics)
         localStorage.setItem('movies', childSnapshot.val().movies)
-        topics.forEach(function (elm) {
-            // $("#topic").append('<option class="topics">' + elm + '</option>');
-            // tv  + 5
-        })
+        topics.forEach(function (elm) {})
         storyTemplate = childSnapshot.val()
         console.log("story template", storyTemplate);
         return topics; //TODO evaluate if return needed?
@@ -272,22 +175,7 @@ $(document).ready(function () {
         localStorage.setItem('selected', JSON.stringify(selected)); // Save to local storage as string
         return selected;
     });
-
-    //Replace words within $$..$$ with the selected words stored in local storage.
-    //cited from this youtube video: https://www.youtube.com/watch?v=ziBO-U2_t3k
-
-    // replacer is a call back function to return the POS from local storage
-    //function replacer(match, p1, p2, p3, p4, p5, offset, string) {
-    // console.log('match and pos', match, p1, p2, p3, p4, p5, offset, string)
-    //return "TEST";
-    //this replace everything with $$..$$ with "test"
-
-    //console.log(entry);
-
-    //return entry[pos]
-
-    //}
-
+    //input the whole story
     $("#replace").on("click", function (event) {
         event.preventDefault();
         let selectedWords = JSON.parse(localStorage.getItem("selected"));
@@ -299,17 +187,9 @@ $(document).ready(function () {
             let toFind = new RegExp('\\$\\$' + prop + '\\$\\$', 'g'); // Need to double escape
 
             console.log('for you to see:', prop, selectedWords[prop], toFind)
-            wholeStory = wholeStory.replace(toFind, selectedWords[prop]); // separate this part to different word types?
-            // console.log(wholeStory)
-
+            wholeStory = wholeStory.replace(toFind, selectedWords[prop]);
         }
         $("#story").text(wholeStory);
 
-        // let wholeStory = storyTemplate.replace(/\$\$(.*?)\$\$/g, replacer); // separate this part to different word types?
-        //$("#story").text(wholeStory);
-        //return selectedWords;
-
-        // for every property in object
-        //      obj[property].forEach
     })
 })
