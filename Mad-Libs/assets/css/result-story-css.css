@@ -1,9 +1,9 @@
-body {
+/* body {
   background-image: url("../images/yellow-falling-stars-gif-on-giphy.gif");
   background-repeat: repeat;
   background-size: cover;
   opacity: 10;
-}
+} */
 
 /*  body {
     height: 100vh;  
@@ -60,7 +60,7 @@ div.card-img-overlay h2 {
 /* The Play Again button */
 #play-again-btn {
   margin-top: 30px;
-  margin-left: 500px;
+  margin-left: 420px;
   font-size: 30px;
   padding-left: 5px;
   padding-right: 5px;
@@ -70,7 +70,7 @@ div.card-img-overlay h2 {
 /* Social Media Buttons */
 .social-buttons {
   margin-top: -100px;
-  margin-left: -660px;
+  margin-left: -630px;
   padding-left: 30px;
 }
 

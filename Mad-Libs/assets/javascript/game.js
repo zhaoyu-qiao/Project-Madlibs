@@ -109,16 +109,69 @@ function getAdvs() {
 }
 
 $(document).ready(function() {
+  //This is the js for cover page. The toggle start and sign up button
+
+  // Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAZbkSjLOrmZFERAxfzs7AHI5-ht5xbT7k",
+    authDomain: "madlibs-f325f.firebaseapp.com",
+    databaseURL: "https://madlibs-f325f.firebaseio.com",
+    projectId: "madlibs-f325f",
+    storageBucket: "madlibs-f325f.appspot.com",
+    messagingSenderId: "702529571921",
+    appId: "1:702529571921:web:f073aeea048c108bf8fc70",
+    measurementId: "G-PDRGRKZPXH"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  // Create a variable to reference the database
+  let database = firebase.database();
+
+  function checkPass() {
+    var name = document.getElementById("name-input").value;
+    var email = document.getElementById("email-input").value; //need
+    var pass = document.getElementById("psw-input").value; //need
+    var rpass = document.getElementById("psw-repeat-input").value;
+    console.log(name);
+    console.log(pass);
+    if (pass != rpass) {
+      document.getElementById("submit").disabled = true;
+      $(".missmatch").html("Entered Password is not matching!! Try Again");
+    } else {
+      $(".missmatch").html("");
+      document.getElementById("submit").disabled = false;
+    }
+  }
+
+  $("#psw-repeat-input").keyup(function() {
+    checkPass();
+  });
+
   // Cited: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_modal2&stacked=h
   /* The toggle start and sign up button */
-  $("#start-btn").click(function() {
+  $("#start-btn").click(function(e) {
     $("#myModal").modal();
   });
 
-  //At the end of the game when the play again button is clicked, the game will reset to the Select a Theme page
-  $(document).on("click", "#play-again-btn", function() {
-    // reset();
+  $("#submit").click(function(e) {
+    e.preventDefault();
+    var email = document.getElementById("email-input").value; //need
+    console.log(email);
+    var pass = document.getElementById("psw-input").value; //need
+    console.log(pass);
+    const auth = firebase.auth();
+    promise = firebase.auth().createUserWithEmailAndPassword(email, pass);
+    console.log(e.message);
   });
+
+  function validateForm() {
+    window.location.replace("mad-libs-theme-selector-page.html");
+  }
+
+  //At the end of the game when the play again button is clicked, the game will reset to the Select a Theme page
+
+  // reset();
+
   // Get the words
   getNouns();
   getVerbs();
@@ -143,49 +196,4 @@ $(document).ready(function() {
     console.log($("#noun option:selected").val());
     localStorage.setItem("selected", JSON.stringify(selected));
   });
-
-  //This is the js for page 3, when the user selects one of the four themes
-
-  // Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyAZbkSjLOrmZFERAxfzs7AHI5-ht5xbT7k",
-    authDomain: "madlibs-f325f.firebaseapp.com",
-    databaseURL: "https://madlibs-f325f.firebaseio.com",
-    projectId: "madlibs-f325f",
-    storageBucket: "madlibs-f325f.appspot.com",
-    messagingSenderId: "702529571921",
-    appId: "1:702529571921:web:f073aeea048c108bf8fc70",
-    measurementId: "G-PDRGRKZPXH"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  // Connect a story from the database to the appropriate theme picture.
-
-  let database = firebase.database();
-
-  //let storyRef = database.ref("/madlibs-f325f");
-
-  //Click function for Mad Libs Movie Theme
-  /*  $("#movie-theme").on("click", function (event) {
-            event.preventDefault();
-    
-            database.ref("/movies").on("value", function (childSnapshot) {  */
-  // storing the snapshot.val() in a variable for convenience
-  /*   let movies = [];
-     let movieName = childSnapshot.val().name;
-     let movieStory = childSnapshot.val().story;
-
-     console.log('snap is:', childSnapshot.val()); */
-
-  // for (let i = 0; i < movies.length; i++) {
-  // This sets the movie theme image with a random movie name array. For each movie name.
-  /*     console.log($(this))
-        let movieOptions = movies[Math.floor(Math.random() * movies.length)];
-        $(this).attr("data-movievalue", movieOptions);
-    }
-    // */
-  //let movieValue = ($(this).attr("data-movievalue"));
-  //pull random movie name along with its story
-  //push the nouns, verbs, adjectives and adverbs to the page 4 words selection page
 });
