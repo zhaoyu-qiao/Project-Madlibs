@@ -60,7 +60,23 @@ form {
   margin-left: 250px;
 }
 
+#test {
+  border-radius: 5px;
+  background-color: rgb(200, 76, 200);
+  border: 2px solid purple;
+  padding: 30px;
+  margin-top: 40px;
+  margin-right: 300px;
+  margin-left: 250px;
+}
+
 label {
+  color: black;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+span {
   color: black;
   font-weight: bolder;
   font-size: 20px;

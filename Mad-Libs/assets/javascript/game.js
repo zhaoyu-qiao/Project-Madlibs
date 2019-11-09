@@ -1,4 +1,85 @@
 // This is the js for page 4, when user input their choices, and make selection
+// Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyAZbkSjLOrmZFERAxfzs7AHI5-ht5xbT7k",
+  authDomain: "madlibs-f325f.firebaseapp.com",
+  databaseURL: "https://madlibs-f325f.firebaseio.com",
+  projectId: "madlibs-f325f",
+  storageBucket: "madlibs-f325f.appspot.com",
+  messagingSenderId: "702529571921",
+  appId: "1:702529571921:web:f073aeea048c108bf8fc70",
+  measurementId: "G-PDRGRKZPXH"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Get a story from the database.
+
+let database = firebase.database();
+let categ = "";
+// Get the first story response from the data info, does there need to be a value change to trigger the function??????????????
+
+// Two ways of getting the stories since on DB there are two ways of writing the stories
+// 1st use Object.values
+/*database.ref("/movies").once("value", function (data) {
+  // console.log(database.ref().child("movies"));
+  console.log("db response:", data.val());
+  let responseObject = data.val();
+  let storyTemplate = Object.values(responseObject)[0].story;
+  console.log(storyTemplate);
+  return storyTemplate;
+});*/
+
+let topics = "";
+// database.ref("/movies").once("value", function (childSnapshot) {//TODO associate topic to link clicked
+//     topics = Object.keys(childSnapshot.val());
+//     console.log("topics",topics);
+//     console.log("db response: ", childSnapshot.val());
+//     topics.forEach(function (elm) {
+//         $("#topic").append('<option class="topics">' + elm + '</option>');
+//         // tv  + 5
+//     })
+//     storyTemplate = childSnapshot.val()
+//     console.log("story template",storyTemplate);
+//     return topics;//TODO evaluate if return needed?
+// })
+
+// this function doesn't trigger, or that storyTemplate scope is wrong.
+$("#testdb").on("click", function() {
+  event.preventDefault();
+  let topicSelected = $("#topic option:selected").val();
+  console.log(topicSelected);
+  localStorage.setItem("topic", topicSelected);
+  $("#story").html(storyTemplate[localStorage.getItem("topic")]);
+  // for (let i = 0; i < topics.length; i++) {
+  //     $("#topic").append('<option class="topics">' + topics[i] + '</option>');
+  // }
+  // // Get topics
+  // topics.forEach(function (elm) {
+  //     $("#topic").append('<option class="topics">' + elm + '</option>');
+  //})
+});
+// //submit2 topics, save topics into local storage.
+// $("#submit2").click(function (event) {
+//     //prevent refresh
+//     event.preventDefault();
+//     let topicSelected = $('#topic option:selected').val()
+//     console.log(topicSelected);
+//     localStorage.setItem('topic', topicSelected);
+//      // Save to local storage as string
+// })
+
+let storyTemplate = ""; // Define this
+// database.ref("/movies").once("value", function (childSnapshot) {
+//     console.log("db response: ", childSnapshot.val());
+//     // tv  + 5
+//     storyTemplate = childSnapshot.val().action;
+
+//     console.log(storyTemplate);
+//     //$("#story").html(storyTemplate); // this should not be triggered here
+//     return storyTemplate;
+// })
+
 // Get 5 nouns /words from words api
 // curl 'https://wordsapiv1.p.mashape.com/words/?partOfSpeech=adverb&random=true' -H "X-Mashape-Key: c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
 let baseUrl = "https://wordsapiv1.p.mashape.com/words/";
@@ -6,25 +87,31 @@ let nounString = "?partOfSpeech=noun";
 let verbString = "?partOfSpeech=verb";
 let adjectiveString = "?partOfSpeech=adjective";
 let adverbString = "?partOfSpeech=adverb";
+let pronounString = "?partOfSpeech=pronoun";
 
 let nounUrl = baseUrl + nounString + "&random=true";
 let verbUrl = baseUrl + verbString + "&random=true";
 let adjectiveUrl = baseUrl + adjectiveString + "&random=true";
 let adverbUrl = baseUrl + adverbString + "&random=true";
-
+let pronounUrl = baseUrl + pronounString + "&random=true";
 console.log(nounUrl);
-console.log(verbUrl);
-console.log(adjectiveUrl);
-console.log(adverbUrl);
+console.log(pronounUrl);
 
-let nounArray = [];
-let verbArray = [];
-let adjArray = [];
-let advArray = [];
+/*let user_project = {
+  nounArray: [],
+  verbArray: [],
+  adjectiveArray: [],
+  adverbArray: [],
+  story: "",
+  user_name: "",
+}
+console.log(user_project);*/
 
-function getNouns() {
+//Getwords function
+function getWords(queryUrl, wordType) {
   for (let i = 0; i < 5; i++) {
     $.ajax({
+      method: "POST",
       beforeSend: function(request) {
         request.setRequestHeader(
           "X-Mashape-Key",
@@ -32,168 +119,185 @@ function getNouns() {
         );
       },
       method: "GET",
-      url: nounUrl
+      url: queryUrl
     }).then(function(response) {
-      console.log(response);
-      console.log(response.word);
+      // console.log(response.word);
 
-      $("#noun").append(
-        '<option class="noun" id="noun1">' + response.word + "</option>"
+      $("#" + wordType).append(
+        '<option class="' + wordType + '">' + response.word + "</option>"
       );
+      //user_project.nounArray.push(response.word);
+      //console.log("nounArray:", user_project.nounArray);
+      //return user_project.nounArray;
     });
   }
+}
+// new object after selection
+// need to add attribute value with the actual value?????????????????
+function getNouns() {
+  getWords(nounUrl, "noun");
 }
 
 function getVerbs() {
-  for (let i = 0; i < 5; i++) {
-    $.ajax({
-      beforeSend: function(request) {
-        request.setRequestHeader(
-          "X-Mashape-Key",
-          "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
-        );
-      },
-      method: "GET",
-      url: verbUrl
-    }).then(function(response) {
-      console.log(response);
-      console.log(response.word);
-
-      $("#verb").append('<option class="verb">' + response.word + "</option>");
-    });
-  }
+  getWords(verbUrl, "verb");
 }
 
 function getAdjs() {
-  for (let i = 0; i < 5; i++) {
-    $.ajax({
-      beforeSend: function(request) {
-        request.setRequestHeader(
-          "X-Mashape-Key",
-          "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
-        );
-      },
-      method: "GET",
-      url: adjectiveUrl
-    }).then(function(response) {
-      console.log(response);
-      console.log(response.word);
-
-      $("#adjective").append(
-        '<option class="adjective">' + response.word + "</option>"
-      );
-    });
-  }
+  getWords(adjectiveUrl, "adjective");
 }
 
 function getAdvs() {
-  for (let i = 0; i < 5; i++) {
-    $.ajax({
-      beforeSend: function(request) {
-        request.setRequestHeader(
-          "X-Mashape-Key",
-          "c689d162f5mshf499a4cc1699b78p184059jsn3776ce81a3ea"
-        );
-      },
-      method: "GET",
-      url: adverbUrl
-    }).then(function(response) {
-      console.log(response);
-      console.log(response.word);
-
-      $("#adverb").append(
-        '<option class="adverb">' + response.word + "</option>"
-      );
-    });
-  }
+  getWords(adverbUrl, "adverb");
 }
 
+function getPronouns() {
+  getWords(pronounUrl, "pronoun");
+}
+
+// randomly pull a story from firebase "on click" - new html with catogory buttons
+// console.log
+// This is moved above.
+
+// combine the selected story and the pulled words which were stored in local storage, and the story into a string.
+// console.log
+
+// Need to also write the story string into HTML.
+// Need to make the code less repetitive using loops.
+
+$();
+
 $(document).ready(function() {
-  //This is the js for cover page. The toggle start and sign up button
-
-  // Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyAZbkSjLOrmZFERAxfzs7AHI5-ht5xbT7k",
-    authDomain: "madlibs-f325f.firebaseapp.com",
-    databaseURL: "https://madlibs-f325f.firebaseio.com",
-    projectId: "madlibs-f325f",
-    storageBucket: "madlibs-f325f.appspot.com",
-    messagingSenderId: "702529571921",
-    appId: "1:702529571921:web:f073aeea048c108bf8fc70",
-    measurementId: "G-PDRGRKZPXH"
-  };
-  firebase.initializeApp(firebaseConfig);
-
-  // Create a variable to reference the database
-  let database = firebase.database();
-
-  function checkPass() {
-    var name = document.getElementById("name-input").value;
-    var email = document.getElementById("email-input").value; //need
-    var pass = document.getElementById("psw-input").value; //need
-    var rpass = document.getElementById("psw-repeat-input").value;
-    console.log(name);
-    console.log(pass);
-    if (pass != rpass) {
-      document.getElementById("submit").disabled = true;
-      $(".missmatch").html("Entered Password is not matching!! Try Again");
-    } else {
-      $(".missmatch").html("");
-      document.getElementById("submit").disabled = false;
-    }
-  }
-
-  $("#psw-repeat-input").keyup(function() {
-    checkPass();
-  });
-
-  // Cited: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_modal2&stacked=h
-  /* The toggle start and sign up button */
-  $("#start-btn").click(function(e) {
-    $("#myModal").modal();
-  });
-
-  $("#submit").click(function(e) {
-    e.preventDefault();
-    var email = document.getElementById("email-input").value; //need
-    console.log(email);
-    var pass = document.getElementById("psw-input").value; //need
-    console.log(pass);
-    const auth = firebase.auth();
-    promise = firebase.auth().createUserWithEmailAndPassword(email, pass);
-    console.log(e.message);
-  });
-
-  function validateForm() {
-    window.location.replace("mad-libs-theme-selector-page.html");
-  }
-
-  //At the end of the game when the play again button is clicked, the game will reset to the Select a Theme page
-
-  // reset();
-
   // Get the words
+  // Put the words into html form to the correct select drop-down.
   getNouns();
   getVerbs();
   getAdjs();
   getAdvs();
+  getPronouns();
   //getLocations();
   //...
-  //writeNouns();
-  // Put the words into html form to the correct input.
+  // categ = window.location.href.slice(window.location.href.indexOf('?') + 1).split("=")[1]
+  // console.log("categ", categ)
 
-  // User select the words from the drop-downs
+  database.ref("/").on("value", function(childSnapshot) {
+    let categKeys = Object.keys(childSnapshot.val());
 
-  // Submit
+    categKeys.forEach(function(elm) {
+      // database.ref(`/${elm}`)...
+      let myBtn = $("<button>")
+        .text(elm)
+        .attr("data-category", elm);
+      myBtn.addClass("categ-c");
+      $(".theme-container").append(myBtn);
+    });
+    console.log("key", childSnapshot.key);
+    console.log("child", childSnapshot.val());
+  });
 
-  //local storage for words submitted on the Select Your Words Page
-  $("#words-submit").click(function() {
-    console.log("submit", this);
-    let mine = $("#noun option:selected").val(); // this is the selected item
-    //create an object to store the item
-    let selected = { noun: "Rodney", selected: mine };
+  // $('.categ-c').click(function(evt) {
+  // $(".theme-container").on("click", ".categ-c", function () {
+  $(".theme-container").on("click", ".theme-image", function() {
+    let categ = $(this).attr("data-category");
+    console.log(categ);
+
+    // database.ref(`/`).once("value", function (childSnapshot) { //TODO associate topic to link clicked
+    database.ref(`/${categ}`).once("value", function(childSnapshot) {
+      //TODO associate topic to link clicked
+      topics = Object.keys(childSnapshot.val());
+      console.log("topics", topics);
+      // console.log
+      console.log("db response: ", childSnapshot.val());
+
+      topics.forEach(function(elm) {
+        $("#topic").append('<option class="topics">' + elm + "</option>");
+        // tv  + 5
+      });
+      storyTemplate = childSnapshot.val();
+      console.log("story template", storyTemplate);
+      return topics; //TODO evaluate if return needed?
+    });
+  });
+
+  // database.ref(`/`).once("value", function (childSnapshot) { //TODO associate topic to link clicked
+  database.ref(`/${categ}`).once("value", function(childSnapshot) {
+    //TODO associate topic to link clicked
+    topics = Object.keys(childSnapshot.val());
+    console.log("topics", topics);
+    console.log("db response: ", childSnapshot.val());
+    // set movie response to localStorage
+    localStorage.setItem("topics", topics);
+    localStorage.setItem("movies", childSnapshot.val().movies);
+    topics.forEach(function(elm) {
+      // $("#topic").append('<option class="topics">' + elm + '</option>');
+      // tv  + 5
+    });
+    storyTemplate = childSnapshot.val();
+    console.log("story template", storyTemplate);
+    return topics; //TODO evaluate if return needed?
+  });
+  //submit function, save things into local storage.
+  $("#submit").click(function(event) {
+    //prevent refresh
+    event.preventDefault();
+    // console.log('submit', this)
+    let nounSelected = $("#noun option:selected").val(); // this is the selected item
+    let verbSelected = $("#verb option:selected").val();
+    let adjectiveSelected = $("#adjective option:selected").val();
+    let adverbSelected = $("#adverb option:selected").val();
+    let pronounSelected = $("#pronoun option:selected").val();
+
+    //create an object to store the selected words
+    let selected = {
+      noun: nounSelected,
+      verb: verbSelected,
+      adjective: adjectiveSelected,
+      adverb: adverbSelected,
+      pronoun: pronounSelected
+      //selected: "" //??? what is mine here
+    };
     // var input = document.getElementById('noun');
     console.log($("#noun option:selected").val());
-    localStorage.setItem("selected", JSON.stringify(selected));
+    console.log("user choices: ", selected);
+    localStorage.setItem("selected", JSON.stringify(selected)); // Save to local storage as string
+    return selected;
+  });
+
+  //Replace words within $$..$$ with the selected words stored in local storage.
+  //cited from this youtube video: https://www.youtube.com/watch?v=ziBO-U2_t3k
+
+  // replacer is a call back function to return the POS from local storage
+  //function replacer(match, p1, p2, p3, p4, p5, offset, string) {
+  // console.log('match and pos', match, p1, p2, p3, p4, p5, offset, string)
+  //return "TEST";
+  //this replace everything with $$..$$ with "test"
+
+  //console.log(entry);
+
+  //return entry[pos]
+
+  //}
+
+  $("#replace").on("click", function(event) {
+    event.preventDefault();
+    let selectedWords = JSON.parse(localStorage.getItem("selected"));
+    console.log(selectedWords);
+
+    let wholeStory = storyTemplate[localStorage.getItem("topic")];
+
+    for (let prop in selectedWords) {
+      let toFind = new RegExp("\\$\\$" + prop + "\\$\\$", "g"); // Need to double escape
+
+      console.log("for you to see:", prop, selectedWords[prop], toFind);
+      wholeStory = wholeStory.replace(toFind, selectedWords[prop]); // separate this part to different word types?
+      // console.log(wholeStory)
+    }
+    $("#story").text(wholeStory);
+
+    // let wholeStory = storyTemplate.replace(/\$\$(.*?)\$\$/g, replacer); // separate this part to different word types?
+    //$("#story").text(wholeStory);
+    //return selectedWords;
+
+    // for every property in object
+    //      obj[property].forEach
   });
 });

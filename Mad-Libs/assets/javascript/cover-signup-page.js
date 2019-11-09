@@ -58,7 +58,7 @@ $(document).ready(function() {
 
   // The toggle between the sign up form and the sign in form
 
-  $(".sign-in").click(function(e) {
+  $("#sign-in-link").click(function(e) {
     console.log("Hi Karlelisa");
     $("#myModal").modal();
     $(".sign-up-content").hide();
