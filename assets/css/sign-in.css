@@ -1,20 +1,25 @@
-/* The toggle sign up */
-.modal-header,
-h4,
-.close {
-  background-color: rgb(81, 81, 241);
-  color: white !important;
-  text-align: center;
-  font-size: 30px;
+* {
+  box-sizing: border-box
 }
 
-.modal-footer {
-  background-color: #f9f9f9;
+
+body {
+  background-color: white;
+  padding-top: 25vh;
+  padding-left: 70vh;
+  background-image: url("../images/2ndMadLibsTheGameHeaderBlue\ \(2\).png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.card {
+  height: 440px;
 }
 
 /* Full-width input fields */
-input[type="text"],
-input[type="password"] {
+input[type=text],
+input[type=password] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -23,8 +28,8 @@ input[type="password"] {
   background-color: #ddd;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
+input[type=text]:focus,
+input[type=password]:focus {
   background-color: #ddd;
   outline: none;
 }

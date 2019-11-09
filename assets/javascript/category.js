@@ -30,26 +30,26 @@ $(document).ready(() => {
 
   //Maintaining for enhancements
   //When the user selects a topic of the category, hide the select your words page and keep the theme continer hidden. Show the story result
-  /*   $(".select-your-words").on("click", "#replace", function () {
-      story_name = $(this).attr("category");
+  /*  $(".select-your-words").on("click", "#replace", function () {
+     story_name = $(this).attr("category");
 
-      $(".theme-container").hide();
-      $(".select-your-words").show();
-   */
-  //Show the words selector form
-  /*   $(".your-story-result").show();
-  }); */
-
-  /* $(".select-your-words").on("click", "#testdb", function () {
-    story_name = $(this).attr("category");
- */
-  /*  $(".theme-container").hide();
-   $(".select-your-words").show(); */
+     $(".theme-container").hide();
+     $(".select-your-words").hide(); */
 
   //Show the words selector form
   /*   $(".your-story-result").show();
   });
- */
+/*  */
+  /*  $(".select-your-words").on("click", "#testdb", function () {
+     story_name = $(this).attr("category");  */
+
+  /*  $(".theme-container").hide();
+   $(".select-your-words").hide(); */
+
+  //Show the words selector form
+  /*   $(".your-story-result").show();
+  }); */
+
 
   // Get words meanings
   // https://www.dictionaryapi.com/api/v3/references/collegiate/json/voluminous?key=7d9d9d50-6001-46a9-a0db-0effdf1bae19
