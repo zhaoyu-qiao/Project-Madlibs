@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Firebase References -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- <script src="assets/javascript/game.js"></script> -->
+
+    <link rel="stylesheet" href="assets/css/word-selector-css.css">
+
+    <link rel="stylesheet" href="assets/images/">
+
+    <title>Select Your Words</title>
+
+</head>
+
+
+
+<div class="select-your-words">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container">
+                <div class="card bg-dark text-white" id="image-card">
+                    <img src="assets/images/purple-burst.jpg" height="250px" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <h1 class="text-center">Select The Types of Words For Your Story!!!</h1>
+                        <h3 class="text-center">Once all of the words are selected, your funny story will populate!
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Words Dropdown Option-->
+
+        <div class="container">
+            <form action="mad-libs-story-result.html">
+                <label for="noun">Noun</label>
+                <select id="noun" name="noun">
+                </select>
+                <label for="verb">Verb</label>
+                <select id="verb" name="verb">
+                </select>
+                <label for="adjective">Adjective</label>
+                <select id="adjective" name="adjective">
+                </select>
+                <label for="adverb">Adverb</label>
+                <select id="adverb" name="adverb">
+                </select>
+                <!-- <input type="submit" value="Submit"> -->
+                <input type="submit" value="Submit" id="words-submit">
+
+            </form>
+        </div>
+    </div>
+
+    </body>
+
+</html>

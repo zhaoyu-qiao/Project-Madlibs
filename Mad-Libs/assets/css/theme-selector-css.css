@@ -1,0 +1,83 @@
+.navbar {
+  background-image: url("../images/blue-burst-abstract-bg-1024x768.png");
+  height: 190px;
+}
+
+.theme-image {
+  height: 380px;
+  width: 350px;
+  float: left;
+  margin-top: 50px;
+  margin: 20px;
+  margin-left: 20px;
+  margin-right: 10px;
+  box-shadow: 20px 20px 15px grey;
+}
+
+
+.theme-image:hover {
+  filter: brightness(150%);
+}
+
+img {
+  box-shadow: 10px 10px 5px grey;
+}
+
+#theme-header {
+  width: 100%;
+}
+
+.card {
+  margin-left: 270px;
+}
+
+div.card-img-overlay {
+  margin: 40px;
+  background-color: #ffffff;
+  border: 1px solid black;
+  opacity: 0.7;
+}
+
+div.card-img-overlay h1,
+div.card-img-overlay h3 {
+  font-weight: bolder;
+  color: #000000;
+  margin-top: 20px;
+}
+
+#little-mad-libs-face {
+  width: 50px;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.theme-container {
+  margin-top: -5px;
+  margin-bottom: 20px;
+}
+
+
+
+button {
+  border: none;
+  text-decoration: none;
+  background-color: white;
+}
+
+/* The Play Again button */
+#play-again-btn {
+  margin-top: 30px;
+  margin-left: 220px;
+  font-size: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 25px;
+}
+
+.card-footer {
+  background-image: url("../images/blue-burst-abstract-bg-1024x768.png");
+}
+
+#words-footer {
+  background-image: url("../images/purple-burst.jpg");
+}

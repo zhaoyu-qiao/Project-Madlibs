@@ -1,0 +1,109 @@
+#main-page-image {
+  margin-top: 10px;
+}
+
+body {
+  background-image: url("../images/2ndMadLibsTheGameHeaderBlue\ \(2\).png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+button:focus {
+  outline: 0;
+}
+
+#start-btn {
+  height: 20%;
+  width: 40%;
+  bottom: 0;
+  margin-top: 46%;
+  margin-left: 290px;
+  padding-top: 10px;
+  padding-right: 334px;
+  padding-left: 190px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 65px;
+  background-color: blue;
+  color: black;
+  font-weight: bolder;
+  border: 4px solid white;
+  border-radius: 15%;
+  box-shadow: 0px 0px 10px 4px;
+}
+
+#start-btn:hover {
+  background-color: rgb(81, 81, 241);
+}
+
+/* The toggle sign up */
+.modal-header,
+h4,
+.close {
+  background-color: rgb(81, 81, 241);
+  color: white !important;
+  text-align: center;
+  font-size: 30px;
+}
+
+.modal-footer {
+  background-color: #f9f9f9;
+}
+
+/* Full-width input fields */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: rgb(0, 119, 255);
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+.card-header {
+  background-color: rgb(0, 119, 255);
+  padding-left: 180px;
+  font-size: 25px;
+  color: white;
+}
