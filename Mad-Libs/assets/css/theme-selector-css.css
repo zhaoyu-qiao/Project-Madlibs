@@ -92,6 +92,16 @@ button {
   background-color: white;
 }
 
+/* The Play Again button */
+#play-again-btn {
+  margin-top: 30px;
+  margin-left: 220px;
+  font-size: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 25px;
+}
+
 .card-footer {
   background-image: url("../images/blue-burst-abstract-bg-1024x768.png");
 }

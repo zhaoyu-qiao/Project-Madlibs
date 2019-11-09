@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+  <!-- Firebase References -->
+  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+
+  <script defer src="assets/javascript/game.js"></script>
+
+  <link rel="stylesheet" href="assets/css/theme-selector-css.css" />
+
+  <link rel="stylesheet" href="assets/images/" />
+  <link rel="stylesheet" href="assets/css/word-selector-css.css" />
+
+  <!-- <link rel="stylesheet" href="assets/css/result-story-css.css" /> -->
+
+
+  <title>Select a Mad Libs Theme</title>
+</head>
+
+<body>
+  <!-- The player selects a Mad Libs Theme -->
+  <!-- https://getbootstrap.com/ -->
+  <div class="theme-container">
+    <div class="row">
+      <div class="col-lg-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="card bg-dark text-white" id="image-card">
+            <img src="assets/images/blue-burst-abstract-bg-1024x768.png" height="210px" width="500px" class="card-img"
+              class="img-fluid" alt="Responsive image" alt="blue asbstract image" />
+            <div class="card-img-overlay">
+              <h1 class="text-center">
+                Select a Mad Libs Theme!!!
+              </h1>
+              <h3 class="text-center">
+                Click on a below picture to make your selection!
+              </h3>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <br>
+    <!-- The theme images Appear here -->
+
+    <div class="col-md-12">
+      <p></p>
+    </div>
+  </div>
+
+  <!--https://getbootstrap.com/docs/4.3/utilities/position/-->
+  <div class="fixed-bottom">
+    <div class="sticky-bottom">
+      <div class="row">
+        <div class="col-sm-12">
+          <!--https://getbootstrap.com/docs/4.3/components/card/-->
+          <div class="card-footer" class="footer">
+            <small class="text-muted"></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- The words selection page -->
+  <!-- The Player selects their words for the story -->
+  <!-- https://getbootstrap.com/ -->
+  <div class="select-your-words">
+    <div id="bg"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container">
+          <div class="card bg-dark text-white" id="image-card">
+            <img src="assets/images/purple-burst.jpg" height="250px" class="card-img" class="img-fluid"
+              alt="Responsive image" alt="purple header image" />
+            <div class="card-img-overlay">
+              <h1 class="text-center">
+                Select The Types of Words and The Topic For Your Story!!!
+              </h1>
+              <!--  <h3 class="text-center">
+                  Once all of the words are selected, your funny story will
+                  populate!
+                </h3> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Words Dropdown Option-->
+      <div class="container">
+        <form>
+          <label for="noun">Noun</label>
+          <select id="noun" name="noun"> </select>
+          <label for="verb">Verb</label>
+          <select id="verb" name="verb"> </select>
+          <label for="adjective">Adjective</label>
+          <select id="adjective" name="adjective"> </select>
+          <label for="adverb">Adverb</label>
+          <select id="adverb" name="adverb"> </select>
+          <label for="pronoun">Pronoun</label>
+          <select id="pronoun" name="pronoun"> </select>
+          <input type="submit" value="words" id="words" />
+        </form>
+        <!--Dictionary lookup words-->
+        <form>
+          Lookup your word here:
+          <input id="lookup" type="text"><br>
+          <button id="search" type="button">Search Here</button>
+          <div id="defination"></div>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-2">
+        <p></p>
+      </div>
+      <div class="col-md-8">
+        <form action="action_page.php">
+          <label for="topic">Choose A Topic!!</label>
+          <select id="topic" name="topic">
+          </select>
+
+        </form>
+      </div>
+      <div class="col-md-2">
+        <p></p>
+      </div>
+    </div>
+
+    <form>
+      <div class="row">
+        <div class="col-md-3">
+          <p></p>
+        </div>
+        <div class="col-md-6">
+          <div id="test">
+            <button id="testdb">Get the story template</button>
+            <button id="replace"><span>Get The Full Story!!</span></button>
+          </div>
+          <div class="col-md-3">
+            <p></p>
+          </div>
+        </div>
+
+        <div>
+
+          <div id="story"></div>
+
+        </div>
+    </form>
+
+    <!-- The Play Again button -->
+    <div class="row">
+      <div class="col-md-3">
+        <p></p>
+      </div>
+      <div class="col-md-8">
+        <div id="play-again-box">
+          <!-- <div id="play-again-btn"></div> -->
+          <a href="mad-libs-theme-selector-page.html" id="play-again-btn"
+            class="btn btn-primary btn-block"><span></span>Play Again!!</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <p></p>
+      </div>
+    </div>
+
+    <!--https://getbootstrap.com/docs/4.3/utilities/position/-->
+    <div class="fixed-bottom">
+      <div class="sticky-bottom">
+        <div class="row">
+          <div class="col-sm-12">
+            <!--https://getbootstrap.com/docs/4.3/components/card/-->
+            <div class="card-footer" id="words-footer" class="footer">
+              <small class="text-muted"></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- The story result page -->
+  <!-- https://getbootstrap.com/ -->
+  <div class="your-story-result">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container">
+          <div class="card bg-dark text-white" id="image-card" class="flex-container">
+            <img src="assets/images/blue-burst-abstract-bg-1024x768.png" height="900px" class="card-img"
+              class="img-fluid" alt="Responsive image" alt="pink background" />
+            <div class="card-img-overlay">
+              <h1 class="text-center">
+                Here's Your Mab Libs Story!!! It's hilarious!
+                <img src="assets/images/face.jpg" alt="madLibsGif" id="little-mad-libs-face" />
+              </h1>
+              <br />
+              <!-- The STORY result will appear here -->
+              <div id="test">
+                <button id="testdb">Get the story template</button>
+                <button id="replace"><span>Get The Full Story!!</span></button>
+              </div>
+            </div>
+
+            <br>
+            <p class="text-justify">
+              **This is just a test to see the paragraph length** He’s a
+              (adjective) (noun). She’s a (opposite adjective)
+              (stereotypically female profession). When they bump into each
+              other at (location), it’s love at first sight–that is until they
+              realize each other’s dark secrets. When she finds out he’s
+              secretly (verb ending in -ing) her (noun), she vows she’ll never
+              love him. Still, he’s convinced she’s the one, so he must
+              convince her he’s really (positive adjective). He follows her to
+              (city) and romantically sweeps her off her feet by (action). The
+              movie ends in the wedding of her dreams.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Play Again button -->
+    <div class="row">
+      <div class="col-md-3">
+        <p></p>
+      </div>
+
+      <div class="col-md-8">
+        <div id="play-again-box">
+          <!-- <div id="play-again-btn"></div> -->
+          <a href="mad-libs-theme-selector-page.html" id="play-again-btn"
+            class="btn btn-primary btn-block"><span></span>Play Again!!</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <p></p>
+      </div>
+    </div>
+
+    <!-- Cited:https://www.w3schools.com/howto/howto_css_social_media_buttons.asp  -->
+    <!-- Social Media buttons for player to share their Mad Libs story -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="social-buttons">
+          <h4>Share Your Story!!</h4>
+          <a href="http://twitter.com/share" target="_blank" class="fa fa-twitter"></a>
+          <a href="https://www.instagram.com" target="_blank" class="fa fa-instagram"></a>
+          <a href="http://www.facebook.com/sharer" target="_blank" class="fa fa-facebook"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+
+
+  <script src="./assets/javascript/category.js"></script>
+
+</body>
+
+</html>
