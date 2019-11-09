@@ -28,6 +28,7 @@ $(document).ready(() => {
     $(".select-your-words").show();
   });
 
+  //Maintaining for enhancements
   //When the user selects a topic of the category, hide the select your words page and keep the theme continer hidden. Show the story result
   /*   $(".select-your-words").on("click", "#replace", function () {
       story_name = $(this).attr("category");

@@ -15,6 +15,7 @@ $(document).ready(() => {
 
     $(".theme-container").append(
       `<button><img src='assets/images/${images[i]}' class='theme-image' data-category=${stories[i]}></button>`
+
     );
   }
 
@@ -28,12 +29,13 @@ $(document).ready(() => {
     $(".select-your-words").show();
   });
 
+  //Maintianing for enhancement
   //When the user selects a topic of the category, hide the select your words page and keep the theme continer hidden. Show the story result
   /*   $(".select-your-words").on("click", "#replace", function () {
       story_name = $(this).attr("category");
 
       $(".theme-container").hide();
-      $(".select-your-words").show();
+      $(".select-your-words").hide();
    */
   //Show the words selector form
   /*   $(".your-story-result").show();
@@ -43,7 +45,7 @@ $(document).ready(() => {
     story_name = $(this).attr("category");
  */
   /*  $(".theme-container").hide();
-   $(".select-your-words").show(); */
+   $(".select-your-words").hide(); */
 
   //Show the words selector form
   /*   $(".your-story-result").show();

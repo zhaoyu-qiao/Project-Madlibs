@@ -1,13 +1,3 @@
-/* * {
-  box-sizing: border-box;
-}
-
-body {
-  background-color: white;
-  padding-top: 25vh;
-  padding-left: 70vh;
-} */
-
 /* The toggle sign up */
 .modal-header,
 h4,
@@ -17,6 +7,7 @@ h4,
   text-align: center;
   font-size: 30px;
 }
+
 .modal-footer {
   background-color: #f9f9f9;
 }
@@ -30,7 +21,6 @@ input[type="password"] {
   display: inline-block;
   border: none;
   background-color: #ddd;
-  /*background: #f1f1f1;*/
 }
 
 input[type="text"]:focus,

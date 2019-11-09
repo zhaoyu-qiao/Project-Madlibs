@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyAZbkSjLOrmZFERAxfzs7AHI5-ht5xbT7k",
@@ -31,17 +31,17 @@ $(document).ready(function() {
     }
   }
 
-  $("#psw-repeat-input").keyup(function() {
+  $("#psw-repeat-input").keyup(function () {
     checkPass();
   });
 
   // Cited: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_modal2&stacked=h
   /* The toggle start and sign up button */
-  $("#start-btn").click(function(e) {
+  $("#start-btn").click(function (e) {
     $("#myModal").modal();
   });
 
-  $(".btn btn-primary btn-block").click(function(e) {
+  $(".btn btn-primary btn-block").click(function (e) {
     e.preventDefault();
     var email = document.getElementById("email-input").value; //need
     console.log(email);
@@ -52,16 +52,13 @@ $(document).ready(function() {
     console.log(e.message);
   });
 
-  /*  function validateForm() {
-    window.location.replace("mad-libs-theme-selector-page.html");
-  } */
 
   // The toggle between the sign up form and the sign in form
 
-  $("#sign-in-link").click(function(e) {
+  /* $("#sign-in-link").click(function(e) {
     console.log("Hi Karlelisa");
     $("#myModal").modal();
     $(".sign-up-content").hide();
     $(".sign-in-content").show();
-  });
+  }); */
 });
